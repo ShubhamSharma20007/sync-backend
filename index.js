@@ -10,8 +10,6 @@ import channelRouter from "./routes/channel_route.js"
 import {fileURLToPath} from "url"
 import path from "path"
 import setupSocket from "./socket.js"
-import http from "http"
-
 const app = express()
 
 
