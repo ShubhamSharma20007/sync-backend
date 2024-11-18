@@ -23,11 +23,19 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 app.use('/',express.static(path.join(dirname,'public')))
 app.use(cors({
-    origin:[process.env.CLIENT_ORIGIN],
-    methods:"*",
-    credentials:true // using this we can use withCredentials in request that can help us to add token directly in the browser cookie 
-    // Allow cookies to be sent with the request
-}))
+    origin: process.env.CLIENT_ORIGIN || 'https://sync-chat-app.netlify.app',
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify the HTTP methods you allow
+    credentials: true, // Allows cookies and credentials to be sent
+    allowedHeaders: ["Content-Type", "Authorization"], // Include any custom headers you use
+}));
+
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_ORIGIN || "https://sync-chat-app.netlify.app");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
+
 
 
 app.use('/api/auth',authRouter)
