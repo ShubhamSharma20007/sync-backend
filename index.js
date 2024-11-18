@@ -24,6 +24,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 app.use('/',express.static(path.join(dirname,'public')))
 app.use(cors({
     origin:[process.env.CLIENT_ORIGIN],
+    // origin:'https://sync-chat-app.netlify.app',
     methods:"*",
     credentials:true // using this we can use withCredentials in request that can help us to add token directly in the browser cookie 
     // Allow cookies to be sent with the request
